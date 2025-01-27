@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 设置按钮点击事件
     settingsBtn.addEventListener('click', function() {
-        settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+        const isHide = settingsPanel.style.display === 'none'
+        settingsPanel.style.display = isHide ? 'block' : 'none';
+        mathProblems.style.display = isHide ? 'none' : 'block';
     });
 
     // 保存设置

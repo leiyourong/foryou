@@ -123,6 +123,13 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    .problem-text {
+        flex: 1;
+        font-size: 2rem;
+        margin-right: 1rem;
+        text-align: right;
+    }
 }
 
 .problem input {
@@ -326,7 +333,7 @@ button:hover {
     padding: 0.8rem;
     border: 2px solid #ddd;
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 2rem;
     text-align: center;
     transition: border-color 0.3s ease;
 }
@@ -411,7 +418,6 @@ button:hover {
     }
 
     .problem {
-        flex-direction: column;
         text-align: center;
     }
 
