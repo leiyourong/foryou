@@ -12,8 +12,8 @@
         <nav>
             <ul>
                 <li><a href="#home">首页</a></li>
+                <li><a href="#math">数学练习</a></li>
                 <li><a href="#about">关于</a></li>
-                <li><a href="#contact">联系</a></li>
             </ul>
         </nav>
     </header>
@@ -24,23 +24,38 @@
             <p>这是我的 GitHub Pages 网站。</p>
         </section>
 
+        <section id="math" class="math-section">
+            <h2>数学练习</h2>
+            <div class="math-settings">
+                <label>
+                    <input type="checkbox" id="allowAddition" checked> 允许加法
+                </label>
+                <label>
+                    <input type="checkbox" id="allowSubtraction" checked> 允许减法
+                </label>
+                <div class="max-number">
+                    <label for="maxNumber">最大数字：</label>
+                    <input type="number" id="maxNumber" value="20" min="1" max="100">
+                </div>
+                <button id="startMath">开始练习</button>
+            </div>
+            <div class="math-problems" style="display: none;">
+                <div id="problemList"></div>
+                <button id="checkAnswers">检查答案</button>
+                <button id="newProblems">新的题目</button>
+            </div>
+        </section>
+
         <section id="about">
             <h2>关于</h2>
             <p>这里可以介绍一些关于您或您项目的信息。</p>
         </section>
-
-        <section id="contact">
-            <h2>联系</h2>
-            <p>您可以通过以下方式联系我：</p>
-            <ul>
-                <li>邮箱：youzi</li>
-                <li>GitHub：<a href="https://github.com/leiyourong">您的 GitHub 主页</a></li>
-            </ul>
-        </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 youzi. All rights reserved.</p>
+        <p>&copy; 2024 All rights reserved.</p>
     </footer>
+
+    <script src="/foryou/js/math.js"></script>
 </body>
 </html> 
