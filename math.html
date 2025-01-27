@@ -19,9 +19,6 @@
         <h1 class="page-title">趣味数学</h1>
         <div class="header-right">
             <button id="settingsBtn" class="icon-button">⚙️</button>
-            <div class="score-display" style="display: none;">
-                得分：<span id="currentScore">0</span>
-            </div>
         </div>
     </header>
 
@@ -45,11 +42,12 @@
                 </div>
                 <button id="startMath" class="primary-button">开始练习</button>
             </div>
-            <div class="math-problems" style="display: none;">
+            <div class="math-problems">
                 <div id="problemList" class="problem-grid"></div>
                 <div class="empty-state">
                     <p>还没有题目哦～</p>
-                    <p>点击右上角的设置按钮 ⚙️ 或下方"新的题目"开始练习吧！</p>
+                    <p>点击下方"新的题目"按钮开始练习吧！</p>
+                    <div class="empty-state-arrow">👇</div>
                 </div>
             </div>
         </section>

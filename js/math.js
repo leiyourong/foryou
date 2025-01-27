@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const newProblemsBtn = document.getElementById('newProblems');
     const mathProblems = document.querySelector('.math-problems');
     const problemList = document.getElementById('problemList');
-    const scoreDisplay = document.querySelector('.score-display');
-    const currentScore = document.getElementById('currentScore');
+
     
     let usedProblems = new Set();
     let currentProblems = [];
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         checkAnswersBtn.classList.toggle('button-disabled', !hasProblems);
         
         // 更新分数显示
-        scoreDisplay.style.display = hasProblems ? 'block' : 'none';
+
     }
 
     // 修改 generateProblems 函数
@@ -76,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         mathProblems.style.display = 'block';
-        scoreDisplay.style.display = 'block';
         problemList.innerHTML = '';
         currentProblems = [];
         usedProblems.clear();
@@ -138,15 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 修改检查答案函数
     function checkAnswers() {
         if (problemList.children.length === 0) {
-            alert('请先点击右上角的设置按钮 ⚙️ 生成题目！');
+            alert('请先点击"新的题目"按钮开始练习！');
             return;
         }
 
         const problems = problemList.querySelectorAll('.problem');
         let correct = 0;
-        let unanswered = 0;
+        let unanswered = [];
 
-        problems.forEach(problem => {
+        problems.forEach((problem, index) => {
             const input = problem.querySelector('input');
             const userAnswer = input.value.trim();
             const correctAnswer = parseInt(input.dataset.answer);
@@ -154,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
             problem.classList.remove('correct', 'incorrect');
             
             if (userAnswer === '') {
-                unanswered++;
+                unanswered.push(index + 1);
             } else {
                 const numAnswer = parseInt(userAnswer);
                 if (numAnswer === correctAnswer) {
@@ -166,35 +164,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        if (unanswered > 0) {
-            alert(`还有 ${unanswered} 道题没有回答，请完成所有题目后再检查答案！`);
+        if (unanswered.length > 0) {
+            alert(`第 ${unanswered.join('、')} 题还没有回答，请填写完所有题目后再检查答案！`);
             return;
         }
 
-        score = correct;
-        currentScore.textContent = score;
+        const score = correct * 10;
+        const message = `本次得分：${score} 分\n答对了 ${correct} 题，共 ${problems.length} 题！`;
         
-        const message = `答对了 ${correct} 题，共 ${problems.length} 题！`;
-        if (correct === problems.length) {
-            alert('太棒了！全部答对了！🎉');
-        } else if (correct >= problems.length * 0.8) {
+        if (score === 100) {
+            alert('太棒了！满分！🎉\n' + message);
+        } else if (score >= 80) {
             alert('非常好！继续加油！👍\n' + message);
         } else {
             alert(message + '\n再试一次吧！💪');
         }
     }
 
-    // 初始化页面状态
+    // 初始化页面状态   
     updateButtonsVisibility();
+
+    checkAnswersBtn.addEventListener('click', checkAnswers);
 
     // 修改新题目按钮点击事件
     newProblemsBtn.addEventListener('click', function() {
         if (problemList.children.length > 0) {
             if (confirm('确定要生成新的题目吗？当前作答将会被清空。')) {
-                settingsPanel.style.display = 'block';
+                generateProblems();
             }
         } else {
-            settingsPanel.style.display = 'block';
+            generateProblems();
         }
     });
 }); 
