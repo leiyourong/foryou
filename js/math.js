@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const newProblemsBtn = document.getElementById('newProblems');
     const mathProblems = document.querySelector('.math-problems');
     const problemList = document.getElementById('problemList');
-
     
     let usedProblems = new Set();
     let currentProblems = [];
@@ -58,9 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // 只禁用检查答案按钮，新题目按钮始终可用
         checkAnswersBtn.disabled = !hasProblems;
         checkAnswersBtn.classList.toggle('button-disabled', !hasProblems);
-        
-        // 更新分数显示
-
     }
 
     // 修改 generateProblems 函数
