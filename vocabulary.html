@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词复习</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/vocabulary.css">
+</head>
+<body class="vocabulary-page">
+    <div class="floating-elements">
+        <div class="float-item word">Book</div>
+        <div class="float-item word">Cat</div>
+        <div class="float-item sound">🔊</div>
+        <div class="float-item star">⭐</div>
+    </div>
+
+    <header>
+        <a href="index.html" class="back-link">← 返回</a>
+        <h1 class="page-title">单词复习</h1>
+        <div class="header-right">
+            <button id="settingsBtn" class="icon-button">⚙️</button>
+        </div>
+    </header>
+
+    <main class="vocabulary-container">
+        <div id="settingsPanel" class="settings-panel" style="display: none;">
+            <h2>学习设置</h2>
+            <div class="settings-grid">
+                <div class="settings-section">
+                    <h3>学习模式</h3>
+                    <label class="setting-item">
+                        <input type="checkbox" id="showTranslation" checked>
+                        <span class="setting-label">显示翻译</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="readChinese" checked>
+                        <span class="setting-label">朗读中文</span>
+                    </label>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>学习方式</h3>
+                    <div class="mode-selector">
+                        <label class="setting-item">
+                            <input type="radio" name="studyMode" value="learn" checked>
+                            <span class="setting-label">学习模式</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="radio" name="studyMode" value="quiz">
+                            <span class="setting-label">测试模式</span>
+                        </label>
+                    </div>
+                    <div id="quizSettings" style="display: none;">
+                        <h4>测试设置</h4>
+                        <label class="setting-item">
+                            <input type="radio" name="quizRange" value="current" checked>
+                            <span class="setting-label">当前课时</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="radio" name="quizRange" value="all">
+                            <span class="setting-label">全部单词</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="number" id="questionCount" value="10" min="5" max="20">
+                            <span class="setting-label">题目数量</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mainContent">
+            <div id="learnMode" class="mode-content active">
+                <div class="lesson-selector">
+                    <button class="lesson-tab active" data-lesson="1">Lesson 1<br>水果</button>
+                    <button class="lesson-tab" data-lesson="2">Lesson 2<br>颜色</button>
+                    <button class="lesson-tab" data-lesson="3">Lesson 3<br>数字</button>
+                    <button class="lesson-tab" data-lesson="4">Lesson 4<br>文具</button>
+                    <button class="lesson-tab" data-lesson="5">Lesson 5<br>家庭</button>
+                    <button class="lesson-tab" data-lesson="6">Lesson 6<br>心情</button>
+                    <button class="lesson-tab" data-lesson="7">Lesson 7<br>身体</button>
+                    <button class="lesson-tab" data-lesson="8">Lesson 8<br>天气</button>
+                    <button class="lesson-tab" data-lesson="9">Lesson 9<br>食物</button>
+                    <button class="lesson-tab" data-lesson="10">Lesson 10<br>学校</button>
+                </div>
+
+                <div class="word-list">
+                    <!-- 单词卡片将通过 JavaScript 动态生成 -->
+                </div>
+            </div>
+
+            <div id="quizMode" class="mode-content">
+                <div class="quiz-container">
+                    <div class="quiz-word">
+                        <button class="play-button large">🔊</button>
+                        <div class="quiz-progress">第 <span id="currentQuestion">1</span> 题，共 <span id="totalQuestions">10</span> 题</div>
+                    </div>
+                    <div class="quiz-options">
+                        <!-- 选项将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+
+                <div class="quiz-result" style="display: none;">
+                    <h3>测试结果</h3>
+                    <div class="result-content">
+                        <!-- 结果将通过 JavaScript 动态生成 -->
+                    </div>
+                    <button id="retryQuiz" class="primary-button">重新测试</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/speech.js"></script>
+    <script src="js/vocabulary-data.js"></script>
+    <script src="js/vocabulary.js"></script>
+</body>
+</html> 
