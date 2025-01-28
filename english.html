@@ -3,47 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数学练习</title>
+    <title>趣味英语</title>
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/math.css">
+    <link rel="stylesheet" href="css/english.css">
 </head>
-<body class="math-page">
+<body class="english-page">
     <div class="floating-elements">
-        <div class="float-item plus">+</div>
-        <div class="float-item minus">-</div>
-        <div class="float-item number">7</div>
-        <div class="float-item number">3</div>
+        <div class="float-item letter">A</div>
+        <div class="float-item letter">z</div>
+        <div class="float-item sound">🔊</div>
+        <div class="float-item star">⭐</div>
     </div>
 
     <header>
         <a href="index.html" class="back-link">← 返回</a>
-        <h1 class="page-title">趣味数学</h1>
+        <h1 class="page-title">趣味英语</h1>
         <div class="header-right">
             <button id="settingsBtn" class="icon-button">⚙️</button>
         </div>
     </header>
 
-    <main class="math-container">
-        <section class="math-section">
+    <main class="english-container">
+        <section class="english-section">
             <div id="settingsPanel" class="settings-panel" style="display: none;">
                 <h2>练习设置</h2>
                 <div class="settings-grid">
                     <label class="setting-item">
-                        <input type="checkbox" id="allowAddition" checked>
-                        <span class="setting-label">加法</span>
+                        <input type="checkbox" id="includeUpperCase" checked>
+                        <span class="setting-label">大写字母</span>
                     </label>
                     <label class="setting-item">
-                        <input type="checkbox" id="allowSubtraction" checked>
-                        <span class="setting-label">减法</span>
+                        <input type="checkbox" id="includeLowerCase" checked>
+                        <span class="setting-label">小写字母</span>
                     </label>
-                    <div class="setting-item max-number">
-                        <label for="maxNumber">最大数字：</label>
-                        <input type="number" id="maxNumber" value="20" min="1" max="100">
-                    </div>
                 </div>
-                <button id="startMath" class="primary-button">开始练习</button>
+                <button id="startEnglish" class="primary-button">开始练习</button>
             </div>
-            <div class="math-problems">
+            <div class="english-problems">
                 <div id="problemList" class="problem-grid"></div>
                 <div class="empty-state">
                     <p>还没有题目哦～</p>
@@ -61,6 +57,7 @@
         </div>
     </div>
 
-    <script src="js/math.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/english.js"></script>
 </body>
 </html> 
