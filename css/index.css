@@ -197,4 +197,21 @@
     color: #666;
     font-size: 1rem;
     margin: 0;
+}
+
+.games-collection-card .card-icon svg {
+    fill: #9C27B0;
+}
+
+.game-decoration {
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    color: #9C27B0;
+    opacity: 0.2;
+    font-weight: bold;
+}
+
+/* 卡片特定颜色 */
+.games-collection-card:hover {
+    border-color: rgba(156, 39, 176, 0.3);
 } 

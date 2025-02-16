@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记忆配对</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/memory.css">
+</head>
+<body class="memory-page">
+    <div class="floating-elements">
+        <div class="float-item card">🎴</div>
+        <div class="float-item star">⭐</div>
+        <div class="float-item heart">❤️</div>
+        <div class="float-item sparkle">✨</div>
+    </div>
+
+    <header>
+        <a href="../games.html" class="back-link">← 返回</a>
+        <h1 class="page-title">记忆配对</h1>
+        <div class="header-right">
+            <button id="settingsBtn" class="icon-button">⚙️</button>
+        </div>
+    </header>
+
+    <main class="memory-container">
+        <div id="settingsPanel" class="settings-panel" style="display: none;">
+            <h2>游戏设置</h2>
+            <div class="settings-grid">
+                <div class="settings-section">
+                    <h3>难度选择</h3>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="easy" checked>
+                        <span class="setting-label">简单 (4x3)</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="medium">
+                        <span class="setting-label">中等 (4x4)</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="hard">
+                        <span class="setting-label">困难 (5x4)</span>
+                    </label>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>单词选择</h3>
+                    <label class="setting-item">
+                        <input type="checkbox" id="showEnglish" checked>
+                        <span class="setting-label">显示英文</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="showChinese" checked>
+                        <span class="setting-label">显示中文</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="playSound" checked>
+                        <span class="setting-label">播放声音</span>
+                    </label>
+                </div>
+            </div>
+            <button id="startGame" class="primary-button">开始游戏</button>
+        </div>
+
+        <div class="game-stats">
+            <div class="stat-item">
+                <span class="stat-label">时间：</span>
+                <span id="timer">00:00</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">翻牌次数：</span>
+                <span id="moves">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">已配对：</span>
+                <span id="matches">0</span>
+            </div>
+        </div>
+
+        <div class="game-board">
+            <!-- 卡片将通过 JavaScript 动态生成 -->
+        </div>
+
+        <div class="game-result" style="display: none;">
+            <h2>恭喜完成！</h2>
+            <div class="result-stats">
+                <p>用时：<span id="finalTime">00:00</span></p>
+                <p>翻牌次数：<span id="finalMoves">0</span></p>
+                <p>得分：<span id="finalScore">0</span></p>
+            </div>
+            <button id="playAgain" class="primary-button">再玩一次</button>
+        </div>
+    </main>
+
+    <script src="../js/speech.js"></script>
+    <script src="../js/vocabulary-data.js"></script>
+    <script src="../js/memory.js"></script>
+</body>
+</html> 

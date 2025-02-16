@@ -1,0 +1,129 @@
+/* 游戏页面样式 */
+.games-page {
+    background: linear-gradient(135deg, #FFD3E8, #B6E3FF);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+.games-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border: 3px solid transparent;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+
+.game-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.game-card:hover .game-icon {
+    transform: scale(1.1);
+}
+
+.game-card h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    background: linear-gradient(45deg, #4ECDC4, #FF6B6B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.game-card p {
+    color: #666;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* 游戏卡片特定样式 */
+.memory-card {
+    border-color: rgba(255, 152, 0, 0.1);
+}
+
+.memory-card:hover {
+    border-color: rgba(255, 152, 0, 0.3);
+}
+
+.puzzle-card {
+    border-color: rgba(76, 175, 80, 0.1);
+}
+
+.puzzle-card:hover {
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.typing-card {
+    border-color: rgba(33, 150, 243, 0.1);
+}
+
+.typing-card:hover {
+    border-color: rgba(33, 150, 243, 0.3);
+}
+
+.word-search-card {
+    border-color: rgba(156, 39, 176, 0.1);
+}
+
+.word-search-card:hover {
+    border-color: rgba(156, 39, 176, 0.3);
+}
+
+/* 浮动装饰元素 */
+.float-item.game { top: 15%; left: 10%; animation-delay: 0s; }
+.float-item.star { top: 25%; right: 15%; animation-delay: -3s; }
+.float-item.puzzle { bottom: 30%; left: 20%; animation-delay: -6s; }
+.float-item.trophy { bottom: 20%; right: 10%; animation-delay: -9s; }
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .game-card {
+        padding: 1.5rem;
+    }
+
+    .game-icon {
+        font-size: 3rem;
+    }
+
+    .game-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .game-card p {
+        font-size: 1rem;
+    }
+} 
