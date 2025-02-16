@@ -1,33 +1,33 @@
 // ABC kids 单词数据
 const vocabularyData = {
     lesson1: [
-        { english: "apple", chinese: "苹果", phonetic: "/ˈæpl/" },
+        { english: "apple", chinese: "苹果", phonetic: "/ˈæp(ə)l/" },
         { english: "banana", chinese: "香蕉", phonetic: "/bəˈnɑːnə/" },
         { english: "cat", chinese: "猫", phonetic: "/kæt/" },
-        { english: "dog", chinese: "狗", phonetic: "/dɔːɡ/" },
+        { english: "dog", chinese: "狗", phonetic: "/dɒɡ/" },
         { english: "elephant", chinese: "大象", phonetic: "/ˈelɪfənt/" },
         { english: "fish", chinese: "鱼", phonetic: "/fɪʃ/" },
         { english: "giraffe", chinese: "长颈鹿", phonetic: "/dʒɪˈrɑːf/" },
-        { english: "horse", chinese: "马", phonetic: "/hɔːrs/" }
+        { english: "horse", chinese: "马", phonetic: "/hɔːs/" }
     ],
     lesson2: [
         { english: "red", chinese: "红色", phonetic: "/red/" },
         { english: "blue", chinese: "蓝色", phonetic: "/bluː/" },
         { english: "green", chinese: "绿色", phonetic: "/ɡriːn/" },
-        { english: "yellow", chinese: "黄色", phonetic: "/ˈjeloʊ/" },
+        { english: "yellow", chinese: "黄色", phonetic: "/ˈjeləʊ/" },
         { english: "black", chinese: "黑色", phonetic: "/blæk/" },
         { english: "white", chinese: "白色", phonetic: "/waɪt/" },
         { english: "pink", chinese: "粉色", phonetic: "/pɪŋk/" },
-        { english: "purple", chinese: "紫色", phonetic: "/ˈpɜːrpl/" }
+        { english: "purple", chinese: "紫色", phonetic: "/ˈpɜː(r)p(ə)l/" }
     ],
     lesson3: [
         { english: "one", chinese: "一", phonetic: "/wʌn/" },
         { english: "two", chinese: "二", phonetic: "/tuː/" },
         { english: "three", chinese: "三", phonetic: "/θriː/" },
-        { english: "four", chinese: "四", phonetic: "/fɔːr/" },
+        { english: "four", chinese: "四", phonetic: "/fɔː(r)/" },
         { english: "five", chinese: "五", phonetic: "/faɪv/" },
         { english: "six", chinese: "六", phonetic: "/sɪks/" },
-        { english: "seven", chinese: "七", phonetic: "/ˈsevn/" },
+        { english: "seven", chinese: "七", phonetic: "/ˈsev(ə)n/" },
         { english: "eight", chinese: "八", phonetic: "/eɪt/" }
     ],
     lesson4: [
