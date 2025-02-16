@@ -41,7 +41,7 @@ const SpeechService = {
             <div class="tip-content">
                 <p>提示：在微信中可能无法播放声音</p>
                 <p>建议使用系统浏览器打开</p>
-                <button onclick="this.parentElement.remove()">知道了</button>
+                <button onclick="this.parentElement.parentElement.remove()">知道了</button>
             </div>
         `;
         document.body.appendChild(tip);
