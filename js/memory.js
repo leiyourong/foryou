@@ -278,6 +278,11 @@ function handleMatch(firstCard, secondCard) {
     firstCard.element.classList.add('matched');
     secondCard.element.classList.add('matched');
     
+    // 播放配对成功音效
+    if (gameState.settings.playSound) {
+        speakWord('Excellent!');
+    }
+    
     gameState.matchedPairs++;
     elements.matches.textContent = gameState.matchedPairs;
     
@@ -285,7 +290,7 @@ function handleMatch(firstCard, secondCard) {
     
     // 检查游戏是否结束
     if (gameState.matchedPairs === gameState.totalPairs) {
-        endGame();
+        setTimeout(endGame, 500);
     }
 }
 
@@ -325,15 +330,48 @@ function endGame() {
     
     const finalTime = elements.timer.textContent;
     const finalMoves = gameState.moves;
-    const timeBonus = Math.max(0, 1000 - Math.floor((Date.now() - gameState.startTime) / 1000));
-    const movesPenalty = gameState.moves * 10;
-    const finalScore = Math.max(0, 1000 + timeBonus - movesPenalty);
     
     elements.finalTime.textContent = finalTime;
     elements.finalMoves.textContent = finalMoves;
-    elements.finalScore.textContent = finalScore;
+    
+    // 根据移动次数显示不同的评价
+    let evaluation = '';
+    const minMoves = gameState.totalPairs * 2; // 理想最小移动次数
+    
+    if (finalMoves <= minMoves + 2) {
+        evaluation = '太厉害了！完美记忆！';
+    } else if (finalMoves <= minMoves + 6) {
+        evaluation = '记忆力超棒！继续保持！';
+    } else if (finalMoves <= minMoves + 10) {
+        evaluation = '做得不错！再接再厉！';
+    } else {
+        evaluation = '完成了挑战！继续练习吧！';
+    }
+    
+    elements.gameResult.innerHTML = `
+        <h2>恭喜完成！</h2>
+        <div class="result-stats">
+            <p>用时：<span>${finalTime}</span></p>
+            <p>翻牌次数：<span>${finalMoves}</span></p>
+            <p>${evaluation}</p>
+        </div>
+        <button id="playAgain" class="primary-button">再玩一次</button>
+    `;
+    
+    // 重新绑定再玩一次按钮事件
+    document.getElementById('playAgain').addEventListener('click', () => {
+        elements.gameResult.style.display = 'none';
+        toggleSettings();
+    });
     
     elements.gameResult.style.display = 'block';
+    
+    // 播放祝贺语音
+    if (gameState.settings.playSound) {
+        setTimeout(() => {
+            SpeechService.playCongratulations();
+        }, 500);
+    }
 }
 
 // 数组随机打乱
