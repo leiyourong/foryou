@@ -1,248 +1,319 @@
-// 游戏状态
-const gameState = {
-    score: 0,
-    level: 1,
-    playerValue: 0,
-    enemyValue: 0,
-    isGameActive: false
-};
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM 元素
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const startPracticeBtn = document.getElementById('startPractice');
+    const practiceAgainBtn = document.getElementById('practiceAgain');
+    const practiceBoard = document.querySelector('.practice-board');
+    const practiceResult = document.querySelector('.practice-result');
+    const questionDisplay = document.querySelector('.question-display');
+    const answerInput = document.getElementById('answer');
+    const resultMessage = document.querySelector('.result-message');
+    const numPad = document.querySelector('.number-pad');
 
-// 难度设置
-const DIFFICULTY_SETTINGS = {
-    easy: { min: 1, max: 10 },
-    medium: { min: 1, max: 20 },
-    hard: { min: 1, max: 30 }
-};
+    // 游戏状态
+    let gameState = {
+        score: 0,
+        level: 1,
+        streak: 0,
+        maxStreak: 0,
+        currentProblem: null,
+        isActive: false
+    };
 
-// DOM 元素
-const elements = {
-    settingsBtn: document.getElementById('settingsBtn'),
-    settingsPanel: document.getElementById('settingsPanel'),
-    startGameBtn: document.getElementById('startGame'),
-    playAgainBtn: document.getElementById('playAgain'),
-    scoreDisplay: document.getElementById('score'),
-    levelDisplay: document.getElementById('level'),
-    playerMonster: document.querySelector('.player-monster'),
-    enemyMonster: document.querySelector('.enemy-monster'),
-    operationButtons: document.querySelector('.operation-buttons'),
-    resultMessage: document.querySelector('.result-message'),
-    gameResult: document.querySelector('.game-result'),
-    finalScore: document.getElementById('finalScore'),
-    finalLevel: document.getElementById('finalLevel')
-};
-
-// 运算符设置
-const operations = {
-    addition: {
-        symbol: '+',
-        execute: (a, b) => a + b,
-        isEnabled: () => document.getElementById('allowAddition').checked
-    },
-    subtraction: {
-        symbol: '-',
-        execute: (a, b) => a - b,
-        isEnabled: () => document.getElementById('allowSubtraction').checked
-    },
-    multiplication: {
-        symbol: '×',
-        execute: (a, b) => a * b,
-        isEnabled: () => document.getElementById('allowMultiplication').checked
+    // 初始化
+    function init() {
+        loadSettings();
+        setupEventListeners();
+        showSettings();
     }
-};
 
-// 初始化游戏
-function initGame() {
-    elements.settingsBtn.addEventListener('click', toggleSettings);
-    elements.startGameBtn.addEventListener('click', startGame);
-    elements.playAgainBtn.addEventListener('click', restartGame);
-    showSettings();
-}
-
-// 切换设置面板
-function toggleSettings() {
-    if (gameState.isGameActive) {
-        if (!confirm('当前游戏进行中，确定要重新开始吗？')) {
-            return;
+    // 加载设置
+    function loadSettings() {
+        const savedSettings = localStorage.getItem('monsterMathSettings');
+        if (savedSettings) {
+            const settings = JSON.parse(savedSettings);
+            document.getElementById('allowAddition').checked = settings.allowAddition;
+            document.getElementById('allowSubtraction').checked = settings.allowSubtraction;
+            document.getElementById('allowMultiplication').checked = settings.allowMultiplication;
+            document.querySelector(`input[name="difficulty"][value="${settings.difficulty}"]`).checked = true;
         }
     }
-    elements.settingsPanel.style.display = 
-        elements.settingsPanel.style.display === 'none' ? 'block' : 'none';
-}
 
-// 显示设置面板
-function showSettings() {
-    elements.settingsPanel.style.display = 'block';
-    elements.gameResult.style.display = 'none';
-}
-
-// 开始新游戏
-function startGame() {
-    if (!validateSettings()) {
-        alert('请至少选择一种运算类型！');
-        return;
+    // 保存设置
+    function saveSettings() {
+        const settings = {
+            allowAddition: document.getElementById('allowAddition').checked,
+            allowSubtraction: document.getElementById('allowSubtraction').checked,
+            allowMultiplication: document.getElementById('allowMultiplication').checked,
+            difficulty: document.querySelector('input[name="difficulty"]:checked').value
+        };
+        localStorage.setItem('monsterMathSettings', JSON.stringify(settings));
     }
 
-    gameState.isGameActive = true;
-    gameState.score = 0;
-    gameState.level = 1;
-    elements.settingsPanel.style.display = 'none';
-    elements.gameResult.style.display = 'none';
-    updateStats();
-    generateRound();
-}
+    // 设置事件监听器
+    function setupEventListeners() {
+        settingsBtn.addEventListener('click', toggleSettings);
+        startPracticeBtn.addEventListener('click', startPractice);
+        practiceAgainBtn.addEventListener('click', restartPractice);
 
-// 验证设置
-function validateSettings() {
-    return Object.values(operations).some(op => op.isEnabled());
-}
+        // 数字键盘事件
+        numPad.addEventListener('click', handleNumPadClick);
 
-// 重启游戏
-function restartGame() {
-    showSettings();
-}
-
-// 生成新回合
-function generateRound() {
-    const difficulty = getDifficulty();
-    gameState.playerValue = generateRandomNumber(difficulty);
-    gameState.enemyValue = generateRandomNumber(difficulty);
-    
-    updateMonsterValues();
-    generateOperationButtons();
-}
-
-// 获取当前难度设置
-function getDifficulty() {
-    const selectedDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
-    return DIFFICULTY_SETTINGS[selectedDifficulty];
-}
-
-// 生成随机数
-function generateRandomNumber({ min, max }) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// 更新怪物数值显示
-function updateMonsterValues() {
-    elements.playerMonster.querySelector('.monster-value').textContent = gameState.playerValue;
-    elements.enemyMonster.querySelector('.monster-value').textContent = gameState.enemyValue;
-}
-
-// 生成操作按钮
-function generateOperationButtons() {
-    elements.operationButtons.innerHTML = '';
-    
-    if (operations.addition.isEnabled()) {
-        addOperationButton('+', () => handleOperation('addition'));
+        // 键盘事件
+        document.addEventListener('keydown', handleKeyPress);
     }
-    if (operations.subtraction.isEnabled()) {
-        addOperationButton('-', () => handleOperation('subtraction'));
+
+    // 处理数字键盘点击
+    function handleNumPadClick(e) {
+        if (!gameState.isActive) return;
+
+        const target = e.target;
+        if (target.classList.contains('num-btn')) {
+            appendNumber(target.textContent);
+        } else if (target.classList.contains('clear-btn')) {
+            clearAnswer();
+        } else if (target.classList.contains('submit-btn')) {
+            submitAnswer();
+        }
     }
-    if (operations.multiplication.isEnabled()) {
-        addOperationButton('×2', () => handleMultiplication(2));
-        addOperationButton('×3', () => handleMultiplication(3));
+
+    // 处理键盘按键
+    function handleKeyPress(e) {
+        if (!gameState.isActive) return;
+
+        if (e.key >= '0' && e.key <= '9') {
+            appendNumber(e.key);
+        } else if (e.key === 'Backspace') {
+            clearAnswer();
+        } else if (e.key === 'Enter') {
+            submitAnswer();
+        }
     }
-}
 
-// 添加操作按钮
-function addOperationButton(symbol, handler) {
-    const button = document.createElement('button');
-    button.className = 'operation-button';
-    button.textContent = symbol;
-    button.addEventListener('click', handler);
-    elements.operationButtons.appendChild(button);
-}
-
-// 处理运算操作
-function handleOperation(operationType) {
-    const operation = operations[operationType];
-    const result = operation.execute(gameState.playerValue, gameState.enemyValue);
-    const calculation = `${gameState.playerValue} ${operation.symbol} ${gameState.enemyValue} = ${result}`;
-    checkResult(result > gameState.enemyValue, calculation);
-}
-
-// 处理乘法操作
-function handleMultiplication(multiplier) {
-    const result = gameState.playerValue * multiplier;
-    const calculation = `${gameState.playerValue} × ${multiplier} = ${result}`;
-    checkResult(result > gameState.enemyValue, calculation);
-}
-
-// 检查结果
-function checkResult(isWinner, calculation) {
-    elements.playerMonster.classList.add(isWinner ? 'winner' : 'loser');
-    elements.enemyMonster.classList.add(isWinner ? 'loser' : 'winner');
-    
-    showResultMessage(isWinner, calculation);
-    
-    if (isWinner) {
-        const bonus = calculateBonus();
-        gameState.score += bonus;
-        gameState.level++;
-    } else {
-        endGame();
-        return;
+    // 添加数字到答案
+    function appendNumber(num) {
+        if (answerInput.value.length < 3) {
+            answerInput.value += num;
+        }
     }
-    
-    updateStats();
-    setTimeout(() => {
-        resetRound();
-        generateRound();
-    }, 2500);
-}
 
-// 计算奖励分数
-function calculateBonus() {
-    const baseScore = gameState.level * 10;
-    const difficulty = getDifficulty();
-    const difficultyMultiplier = {
-        easy: 1,
-        medium: 1.5,
-        hard: 2
-    }[difficulty.value] || 1;
-    
-    return Math.round(baseScore * difficultyMultiplier);
-}
+    // 清除答案
+    function clearAnswer() {
+        answerInput.value = '';
+    }
 
-// 显示结果消息
-function showResultMessage(isWinner, calculation) {
-    elements.resultMessage.className = `result-message ${isWinner ? 'success' : 'failure'}`;
-    
-    const bonus = isWinner ? calculateBonus() : 0;
-    const message = isWinner 
-        ? `<div class="calculation">${calculation}</div>
-           <div class="result-text">太棒了！你赢了！</div>
-           <div class="bonus">+${bonus} 分</div>`
-        : `<div class="calculation">${calculation}</div>
-           <div class="result-text">继续加油！</div>`;
-    
-    elements.resultMessage.innerHTML = message;
-    elements.resultMessage.style.display = 'block';
-}
+    // 切换设置面板
+    function toggleSettings() {
+        if (gameState.isActive) {
+            if (!confirm('当前练习进行中，确定要重新开始吗？')) {
+                return;
+            }
+        }
+        settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+        practiceBoard.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+    }
 
-// 重置回合
-function resetRound() {
-    elements.playerMonster.classList.remove('winner', 'loser');
-    elements.enemyMonster.classList.remove('winner', 'loser');
-    elements.resultMessage.style.display = 'none';
-}
+    // 显示设置面板
+    function showSettings() {
+        settingsPanel.style.display = 'block';
+        practiceBoard.style.display = 'none';
+        practiceResult.style.display = 'none';
+    }
 
-// 更新游戏统计
-function updateStats() {
-    elements.scoreDisplay.textContent = gameState.score;
-    elements.levelDisplay.textContent = gameState.level;
-}
+    // 开始练习
+    function startPractice() {
+        if (!validateSettings()) {
+            alert('请至少选择一种运算！');
+            return;
+        }
 
-// 结束游戏
-function endGame() {
-    gameState.isGameActive = false;
-    elements.finalScore.textContent = gameState.score;
-    elements.finalLevel.textContent = gameState.level;
-    
-    setTimeout(() => {
-        elements.gameResult.style.display = 'block';
-    }, 1500);
-}
+        saveSettings();
+        resetGameState();
+        settingsPanel.style.display = 'none';
+        practiceBoard.style.display = 'block';
+        practiceResult.style.display = 'none';
+        generateProblem();
+    }
 
-// 初始化游戏
-document.addEventListener('DOMContentLoaded', initGame); 
+    // 重新开始练习
+    function restartPractice() {
+        showSettings();
+    }
+
+    // 验证设置
+    function validateSettings() {
+        return document.getElementById('allowAddition').checked ||
+               document.getElementById('allowSubtraction').checked ||
+               document.getElementById('allowMultiplication').checked;
+    }
+
+    // 重置游戏状态
+    function resetGameState() {
+        gameState = {
+            score: 0,
+            level: 1,
+            streak: 0,
+            maxStreak: 0,
+            currentProblem: null,
+            isActive: true
+        };
+        updateStats();
+        clearAnswer();
+        answerInput.disabled = false;
+        resultMessage.style.display = 'none';
+    }
+
+    // 生成题目
+    function generateProblem() {
+        const difficulty = getDifficultyRange();
+        const operations = getEnabledOperations();
+        const operation = operations[Math.floor(Math.random() * operations.length)];
+        
+        let num1, num2, answer;
+        
+        if (operation === '×') {
+            num1 = Math.floor(Math.random() * (difficulty.max / 3)) + 1;
+            num2 = Math.floor(Math.random() * 2) + 2; // 只使用2或3作为乘数
+            answer = num1 * num2;
+        } else if (operation === '+') {
+            num1 = Math.floor(Math.random() * (difficulty.max - 1)) + 1;
+            num2 = Math.floor(Math.random() * (difficulty.max - num1)) + 1;
+            answer = num1 + num2;
+        } else {
+            num1 = Math.floor(Math.random() * (difficulty.max - 1)) + 2;
+            num2 = Math.floor(Math.random() * (num1 - 1)) + 1;
+            answer = num1 - num2;
+        }
+
+        gameState.currentProblem = { num1, num2, operation, answer };
+        displayProblem();
+    }
+
+    // 获取当前难度范围
+    function getDifficultyRange() {
+        const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+        return {
+            easy: { min: 1, max: 10 },
+            medium: { min: 1, max: 20 },
+            hard: { min: 1, max: 30 }
+        }[difficulty];
+    }
+
+    // 获取启用的运算
+    function getEnabledOperations() {
+        const operations = [];
+        if (document.getElementById('allowAddition').checked) operations.push('+');
+        if (document.getElementById('allowSubtraction').checked) operations.push('-');
+        if (document.getElementById('allowMultiplication').checked) operations.push('×');
+        return operations;
+    }
+
+    // 显示题目
+    function displayProblem() {
+        const { num1, num2, operation } = gameState.currentProblem;
+        document.getElementById('num1').textContent = num1;
+        document.getElementById('operator').textContent = operation;
+        document.getElementById('num2').textContent = num2;
+        clearAnswer();
+    }
+
+    // 提交答案
+    function submitAnswer() {
+        if (!gameState.isActive || !answerInput.value) return;
+
+        const userAnswer = parseInt(answerInput.value);
+        const isCorrect = userAnswer === gameState.currentProblem.answer;
+
+        if (isCorrect) {
+            handleCorrectAnswer();
+        } else {
+            handleIncorrectAnswer();
+        }
+
+        showResultMessage(isCorrect);
+        setTimeout(() => {
+            if (gameState.isActive) {
+                generateProblem();
+            }
+        }, 1500);
+    }
+
+    // 处理正确答案
+    function handleCorrectAnswer() {
+        gameState.streak++;
+        gameState.maxStreak = Math.max(gameState.maxStreak, gameState.streak);
+        
+        // 根据难度和连续答对次数计算得分
+        const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+        const baseScore = {
+            easy: 10,
+            medium: 15,
+            hard: 20
+        }[difficulty];
+        
+        const streakBonus = Math.floor(gameState.streak / 5) * 5;
+        gameState.score += baseScore + streakBonus;
+
+        // 每5题连续答对提升等级
+        if (gameState.streak % 5 === 0) {
+            gameState.level++;
+        }
+
+        updateStats();
+    }
+
+    // 处理错误答案
+    function handleIncorrectAnswer() {
+        gameState.streak = 0;
+        updateStats();
+        endPractice();
+    }
+
+    // 显示结果消息
+    function showResultMessage(isCorrect) {
+        const { num1, num2, operation, answer } = gameState.currentProblem;
+        
+        resultMessage.className = `result-message ${isCorrect ? 'correct' : 'incorrect'}`;
+        resultMessage.innerHTML = isCorrect
+            ? `<div>正确！ ${num1} ${operation} ${num2} = ${answer}</div>`
+            : `<div>加油！ ${num1} ${operation} ${num2} = ${answer}</div>`;
+        
+        resultMessage.style.display = 'block';
+    }
+
+    // 更新统计数据
+    function updateStats() {
+        document.getElementById('score').textContent = gameState.score;
+        document.getElementById('level').textContent = gameState.level;
+        document.getElementById('streak').textContent = gameState.streak;
+    }
+
+    // 结束练习
+    function endPractice() {
+        gameState.isActive = false;
+        answerInput.disabled = true;
+
+        document.getElementById('finalScore').textContent = gameState.score;
+        document.getElementById('finalLevel').textContent = gameState.level;
+        document.getElementById('maxStreak').textContent = gameState.maxStreak;
+
+        // 显示成就消息
+        const achievementMessage = document.querySelector('.achievement-message');
+        if (gameState.score >= 200) {
+            achievementMessage.textContent = '🏆 数学小天才！';
+        } else if (gameState.score >= 100) {
+            achievementMessage.textContent = '🌟 练习达人！';
+        } else {
+            achievementMessage.textContent = '💪 继续加油！';
+        }
+
+        setTimeout(() => {
+            practiceBoard.style.display = 'none';
+            practiceResult.style.display = 'block';
+        }, 1500);
+    }
+
+    // 初始化游戏
+    init();
+}); 

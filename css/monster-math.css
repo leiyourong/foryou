@@ -1,17 +1,18 @@
+/* 数学页面样式 */
 .monster-math-page {
-    background: linear-gradient(135deg, #FFE5D9, #B5EAD7);
+    background: linear-gradient(135deg, #B6E3FF, #FFD3E8);
     min-height: 100vh;
-    padding-bottom: 2rem;
+    padding-bottom: 80px;
 }
 
-.monster-math-container {
-    max-width: 1200px;
+.math-container {
+    max-width: 800px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
-/* 游戏统计 */
-.game-stats {
+/* 练习统计 */
+.practice-stats {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -32,106 +33,79 @@
     margin-right: 0.5rem;
 }
 
-/* 战斗区域 */
-.battle-area {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 2rem 0;
-    gap: 2rem;
-}
-
-.monster-container {
+/* 问题区域 */
+.question-area {
     background: white;
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+}
+
+.question-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+#answer {
+    width: 100px;
+    height: 50px;
+    font-size: 2rem;
     text-align: center;
-    min-width: 200px;
-    transition: transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.monster-container:hover {
-    transform: translateY(-5px);
-}
-
-.monster-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
-    pointer-events: none;
-}
-
-.monster-image {
-    font-size: 4rem;
-    margin: 1rem 0;
-    animation: monsterFloat 3s infinite ease-in-out;
-}
-
-.monster-value {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #2196F3;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 1;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    background: rgba(255,255,255,0.9);
-    padding: 0.5rem 1rem;
+    border: 2px solid #ddd;
     border-radius: 10px;
-    display: inline-block;
+    outline: none;
 }
 
-.vs-symbol {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #FF6B6B;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+#answer:focus {
+    border-color: #4CAF50;
 }
 
-/* 操作按钮 */
-.operation-buttons {
+/* 数字键盘 */
+.number-pad {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 0.8rem;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.operation-button {
-    position: relative;
-    overflow: hidden;
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+.num-btn, .clear-btn, .submit-btn {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.operation-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s;
+.num-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
 }
 
-.operation-button:hover::after {
-    width: 120%;
-    height: 120%;
+.clear-btn {
+    background: #FFE5D9;
+    color: #FF6B6B;
+}
+
+.clear-btn:hover {
+    background: #FFCAD4;
+}
+
+.submit-btn {
+    background: #B5EAD7;
+    color: #2F4858;
+    grid-column: span 2;
+}
+
+.submit-btn:hover {
+    background: #C7F9CC;
 }
 
 /* 结果消息 */
@@ -146,160 +120,18 @@
     max-width: 400px;
 }
 
-.result-message .calculation {
-    font-family: 'Courier New', monospace;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
-    color: #333;
-}
-
-.result-message .result-text {
-    margin: 1rem 0;
-    font-size: 1.6rem;
-}
-
-.result-message .bonus {
-    font-size: 1.4rem;
-    color: #4CAF50;
-    animation: bonusPopup 0.5s ease-out;
-}
-
-.result-message.success {
+.result-message.correct {
     background: linear-gradient(45deg, #B5EAD7, #C7F9CC);
     box-shadow: 0 8px 24px rgba(76, 175, 80, 0.2);
 }
 
-.result-message.failure {
+.result-message.incorrect {
     background: linear-gradient(45deg, #FFE5D9, #FFCAD4);
     box-shadow: 0 8px 24px rgba(244, 67, 54, 0.2);
 }
 
-/* 动画效果 */
-@keyframes monsterFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes messagePopup {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes bonusPopup {
-    0% { transform: scale(0.8) translateY(10px); opacity: 0; }
-    50% { transform: scale(1.2) translateY(-5px); }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-/* 浮动装饰元素 */
-.floating-elements {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.float-item {
-    position: absolute;
-    font-size: 2rem;
-    opacity: 0.2;
-    animation: float 15s infinite linear;
-}
-
-.float-item.number {
-    color: #2196F3;
-}
-
-.float-item.operator {
-    color: #FF6B6B;
-    font-weight: bold;
-}
-
-@keyframes float {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    33% { transform: translate(30px, -30px) rotate(120deg); }
-    66% { transform: translate(-30px, 30px) rotate(240deg); }
-    100% { transform: translate(0, 0) rotate(360deg); }
-}
-
-/* 响应式布局 */
-@media (max-width: 768px) {
-    .battle-area {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .monster-container {
-        width: 100%;
-        max-width: 300px;
-        padding: 1.5rem;
-    }
-
-    .monster-image {
-        font-size: 3rem;
-    }
-
-    .monster-value {
-        font-size: 2rem;
-    }
-
-    .vs-symbol {
-        font-size: 2rem;
-    }
-
-    .result-message {
-        margin: 1rem;
-        padding: 1rem;
-        font-size: 1.2rem;
-    }
-
-    .result-message .calculation {
-        font-size: 1.4rem;
-        padding: 0.8rem;
-    }
-
-    .result-message .result-text {
-        font-size: 1.3rem;
-    }
-
-    .result-message .bonus {
-        font-size: 1.2rem;
-    }
-
-    .operation-button {
-        padding: 0.8rem 1.2rem;
-        font-size: 1.2rem;
-    }
-}
-
-/* 胜利/失败动画 */
-.monster-container.winner {
-    animation: winnerPulse 1s infinite;
-}
-
-.monster-container.loser {
-    animation: loserShake 0.5s;
-    opacity: 0.7;
-}
-
-@keyframes winnerPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(76, 175, 80, 0.3); }
-    100% { transform: scale(1); }
-}
-
-@keyframes loserShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-/* 游戏说明和提示 */
-.game-instructions, .difficulty-hint, .result-tips {
+/* 练习说明和提示 */
+.game-instructions, .result-tips {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 1.2rem;
@@ -307,27 +139,27 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.game-instructions p, .difficulty-hint p, .result-tips p {
+.game-instructions p, .result-tips p {
     color: #2196F3;
     font-weight: bold;
     font-size: 1.1rem;
     margin-bottom: 0.8rem;
 }
 
-.game-instructions ul, .difficulty-hint ul, .result-tips ul {
+.game-instructions ul, .result-tips ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.game-instructions li, .difficulty-hint li, .result-tips li {
+.game-instructions li, .result-tips li {
     padding: 0.5rem 0;
     color: #666;
     position: relative;
     padding-left: 1.5rem;
 }
 
-.game-instructions li::before, .difficulty-hint li::before, .result-tips li::before {
+.game-instructions li::before, .result-tips li::before {
     content: '•';
     color: #4ECDC4;
     position: absolute;
@@ -336,25 +168,142 @@
 }
 
 .achievement-message {
-    margin-top: 1rem;
+    margin: 1rem 0;
     font-size: 1.2rem;
+    color: #4CAF50;
+}
+
+/* 设置面板 */
+.settings-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.settings-panel h2 {
+    margin: 0 0 1.5rem;
+    color: #333;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    margin: 0 0 1rem;
+    color: #666;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.setting-item input {
+    margin-right: 1rem;
+}
+
+.setting-label {
+    color: #333;
+}
+
+/* 练习结果 */
+.practice-result {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.practice-result h2 {
+    color: #2196F3;
+    margin-bottom: 1.5rem;
+}
+
+.result-stats {
+    margin-bottom: 2rem;
+}
+
+.result-stats p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.result-stats span {
     color: #4CAF50;
     font-weight: bold;
 }
 
-/* 响应式调整 */
+/* 动画效果 */
+@keyframes messagePopup {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 浮动装饰元素 */
+.float-item.number { color: #2196F3; }
+.float-item.operator { color: #4CAF50; font-weight: bold; }
+
+/* 响应式设计 */
 @media (max-width: 768px) {
-    .game-instructions, .difficulty-hint, .result-tips {
-        padding: 1rem;
-        margin: 1rem 0;
+    .math-container {
+        margin: 1rem auto;
     }
 
-    .game-instructions p, .difficulty-hint p, .result-tips p {
+    .practice-stats {
+        gap: 1rem;
+    }
+
+    .stat-item {
+        padding: 0.6rem 1rem;
         font-size: 1rem;
     }
 
-    .game-instructions li, .difficulty-hint li, .result-tips li {
-        font-size: 0.9rem;
-        padding: 0.4rem 0 0.4rem 1.2rem;
+    .question-display {
+        font-size: 2rem;
+        flex-wrap: wrap;
+    }
+
+    #answer {
+        width: 80px;
+        height: 40px;
+        font-size: 1.8rem;
+    }
+
+    .num-btn, .clear-btn, .submit-btn {
+        padding: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .result-message {
+        margin: 1rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .settings-panel {
+        padding: 1.5rem;
+    }
+
+    .practice-result {
+        padding: 1.5rem;
+    }
+
+    .result-stats p {
+        font-size: 1.1rem;
     }
 } 

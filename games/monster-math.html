@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>怪物数学对战</title>
+    <title>数学练习</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/monster-math.css">
 </head>
@@ -17,22 +17,22 @@
 
     <header>
         <a href="../games.html" class="back-link">← 返回</a>
-        <h1 class="page-title">怪物数学对战</h1>
+        <h1 class="page-title">数学练习</h1>
         <div class="header-right">
             <button id="settingsBtn" class="icon-button">⚙️</button>
         </div>
     </header>
 
-    <main class="monster-math-container">
+    <main class="math-container">
         <div id="settingsPanel" class="settings-panel" style="display: none;">
-            <h2>游戏设置</h2>
+            <h2>练习设置</h2>
             <div class="game-instructions">
-                <p>🎮 游戏说明：</p>
+                <p>📝 练习说明：</p>
                 <ul>
-                    <li>选择你的小怪物，通过数学运算打败对手！</li>
-                    <li>使用加法、减法或乘法，让你的数值超过对手</li>
-                    <li>每次胜利都会获得分数，难度越高分数越多</li>
-                    <li>连续获胜可以提升等级，挑战更高难度</li>
+                    <li>选择你想练习的运算类型</li>
+                    <li>根据难度选择数字范围</li>
+                    <li>每答对一题获得相应分数</li>
+                    <li>连续答对可以提升等级！</li>
                 </ul>
             </div>
             <div class="settings-grid">
@@ -68,43 +68,46 @@
                     </label>
                 </div>
             </div>
-            <div class="difficulty-hint">
-                <p>💡 提示：</p>
-                <ul>
-                    <li>简单模式适合初学者，数字范围较小</li>
-                    <li>中等模式需要更多思考和计算</li>
-                    <li>困难模式将测试你的数学能力极限</li>
-                </ul>
-            </div>
-            <button id="startGame" class="primary-button">开始游戏</button>
+            <button id="startPractice" class="primary-button">开始练习</button>
         </div>
 
-        <div class="game-board">
-            <div class="game-stats">
+        <div class="practice-board">
+            <div class="practice-stats">
                 <div class="stat-item">
                     <span class="stat-label">得分：</span>
                     <span id="score">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">关卡：</span>
+                    <span class="stat-label">等级：</span>
                     <span id="level">1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">连续正确：</span>
+                    <span id="streak">0</span>
                 </div>
             </div>
 
-            <div class="battle-area">
-                <div class="player-monster monster-container">
-                    <div class="monster-value">?</div>
-                    <div class="monster-image">👾</div>
-                    <div class="operation-buttons">
-                        <!-- 操作按钮将通过 JavaScript 动态生成 -->
-                    </div>
+            <div class="question-area">
+                <div class="question-display">
+                    <span id="num1">?</span>
+                    <span id="operator">?</span>
+                    <span id="num2">?</span>
+                    <span>=</span>
+                    <input type="number" id="answer" placeholder="?" disabled>
                 </div>
-
-                <div class="vs-symbol">VS</div>
-
-                <div class="enemy-monster monster-container">
-                    <div class="monster-value">?</div>
-                    <div class="monster-image">👹</div>
+                <div class="number-pad">
+                    <button class="num-btn">1</button>
+                    <button class="num-btn">2</button>
+                    <button class="num-btn">3</button>
+                    <button class="num-btn">4</button>
+                    <button class="num-btn">5</button>
+                    <button class="num-btn">6</button>
+                    <button class="num-btn">7</button>
+                    <button class="num-btn">8</button>
+                    <button class="num-btn">9</button>
+                    <button class="num-btn">0</button>
+                    <button class="clear-btn">清除</button>
+                    <button class="submit-btn">确定</button>
                 </div>
             </div>
 
@@ -113,11 +116,12 @@
             </div>
         </div>
 
-        <div class="game-result" style="display: none;">
-            <h2>游戏结束</h2>
+        <div class="practice-result" style="display: none;">
+            <h2>练习结束</h2>
             <div class="result-stats">
                 <p>最终得分：<span id="finalScore">0</span></p>
-                <p>通过关卡：<span id="finalLevel">0</span></p>
+                <p>最高等级：<span id="finalLevel">0</span></p>
+                <p>最长连续正确：<span id="maxStreak">0</span></p>
                 <div class="achievement-message"></div>
             </div>
             <div class="result-tips">
@@ -128,7 +132,7 @@
                     <li>培养解决问题的能力</li>
                 </ul>
             </div>
-            <button id="playAgain" class="primary-button">再玩一次</button>
+            <button id="practiceAgain" class="primary-button">再练一次</button>
         </div>
     </main>
 
