@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>怪物数学对战</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/monster-math.css">
+</head>
+<body class="monster-math-page">
+    <div class="floating-elements">
+        <div class="float-item number">1</div>
+        <div class="float-item operator">+</div>
+        <div class="float-item number">2</div>
+        <div class="float-item operator">×</div>
+    </div>
+
+    <header>
+        <a href="../games.html" class="back-link">← 返回</a>
+        <h1 class="page-title">怪物数学对战</h1>
+        <div class="header-right">
+            <button id="settingsBtn" class="icon-button">⚙️</button>
+        </div>
+    </header>
+
+    <main class="monster-math-container">
+        <div id="settingsPanel" class="settings-panel" style="display: none;">
+            <h2>游戏设置</h2>
+            <div class="game-instructions">
+                <p>🎮 游戏说明：</p>
+                <ul>
+                    <li>选择你的小怪物，通过数学运算打败对手！</li>
+                    <li>使用加法、减法或乘法，让你的数值超过对手</li>
+                    <li>每次胜利都会获得分数，难度越高分数越多</li>
+                    <li>连续获胜可以提升等级，挑战更高难度</li>
+                </ul>
+            </div>
+            <div class="settings-grid">
+                <div class="settings-section">
+                    <h3>运算类型</h3>
+                    <label class="setting-item">
+                        <input type="checkbox" id="allowAddition" checked>
+                        <span class="setting-label">加法</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="allowSubtraction" checked>
+                        <span class="setting-label">减法</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="checkbox" id="allowMultiplication">
+                        <span class="setting-label">乘法(×2,×3)</span>
+                    </label>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>难度设置</h3>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="easy" checked>
+                        <span class="setting-label">简单 (1-10)</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="medium">
+                        <span class="setting-label">中等 (1-20)</span>
+                    </label>
+                    <label class="setting-item">
+                        <input type="radio" name="difficulty" value="hard">
+                        <span class="setting-label">困难 (1-30)</span>
+                    </label>
+                </div>
+            </div>
+            <div class="difficulty-hint">
+                <p>💡 提示：</p>
+                <ul>
+                    <li>简单模式适合初学者，数字范围较小</li>
+                    <li>中等模式需要更多思考和计算</li>
+                    <li>困难模式将测试你的数学能力极限</li>
+                </ul>
+            </div>
+            <button id="startGame" class="primary-button">开始游戏</button>
+        </div>
+
+        <div class="game-board">
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">得分：</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">关卡：</span>
+                    <span id="level">1</span>
+                </div>
+            </div>
+
+            <div class="battle-area">
+                <div class="player-monster monster-container">
+                    <div class="monster-value">?</div>
+                    <div class="monster-image">👾</div>
+                    <div class="operation-buttons">
+                        <!-- 操作按钮将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+
+                <div class="vs-symbol">VS</div>
+
+                <div class="enemy-monster monster-container">
+                    <div class="monster-value">?</div>
+                    <div class="monster-image">👹</div>
+                </div>
+            </div>
+
+            <div class="result-message" style="display: none;">
+                <!-- 结果消息将通过 JavaScript 动态显示 -->
+            </div>
+        </div>
+
+        <div class="game-result" style="display: none;">
+            <h2>游戏结束</h2>
+            <div class="result-stats">
+                <p>最终得分：<span id="finalScore">0</span></p>
+                <p>通过关卡：<span id="finalLevel">0</span></p>
+                <div class="achievement-message"></div>
+            </div>
+            <div class="result-tips">
+                <p>💪 继续练习可以：</p>
+                <ul>
+                    <li>提高心算能力</li>
+                    <li>增强数学思维</li>
+                    <li>培养解决问题的能力</li>
+                </ul>
+            </div>
+            <button id="playAgain" class="primary-button">再玩一次</button>
+        </div>
+    </main>
+
+    <script src="../js/monster-math.js"></script>
+</body>
+</html> 
