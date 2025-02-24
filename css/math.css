@@ -48,6 +48,109 @@
     cursor: pointer;
 }
 
+/* 每日挑战信息 */
+.daily-challenge-info {
+    background: linear-gradient(45deg, #B5EAD7, #C7F9CC);
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.daily-challenge-info h3 {
+    color: #2F4858;
+    margin-bottom: 1rem;
+}
+
+.daily-challenge-info p {
+    color: #2F4858;
+    margin-bottom: 1.5rem;
+}
+
+/* 日历视图 */
+.calendar-view {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.calendar-grid {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.calendar-grid h3 {
+    text-align: center;
+    color: #2196F3;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.week-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.week-day {
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+    padding: 0.5rem;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.day-cell:not(.empty):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.day-cell.empty {
+    background: transparent;
+}
+
+.day-cell.today {
+    border: 2px solid #2196F3;
+}
+
+.day-cell .score {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.2rem;
+}
+
+.day-cell.perfect {
+    background: linear-gradient(45deg, #B5EAD7, #C7F9CC);
+}
+
+.day-cell.good {
+    background: linear-gradient(45deg, #FFE5D9, #FFCAD4);
+}
+
+.day-cell.normal {
+    background: linear-gradient(45deg, #F8F9FA, #E9ECEF);
+}
+
 /* 数字输入框 */
 .max-number {
     display: flex;
@@ -185,5 +288,22 @@
 
     .setting-item {
         padding: 0.8rem;
+    }
+
+    .calendar-grid {
+        padding: 0.5rem;
+    }
+
+    .day-cell {
+        font-size: 0.9rem;
+    }
+
+    .day-cell .score {
+        font-size: 0.7rem;
+    }
+
+    .week-day {
+        font-size: 0.9rem;
+        padding: 0.3rem;
     }
 } 
