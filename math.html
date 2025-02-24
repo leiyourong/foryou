@@ -19,46 +19,91 @@
         <a href="index.html" class="back-link">← 返回</a>
         <h1 class="page-title">趣味数学</h1>
         <div class="header-right">
-            <button id="showCalendar" class="icon-button">📅</button>
-            <button id="settingsBtn" class="icon-button">⚙️</button>
+            <button id="showCalendar" class="icon-button" title="查看历史记录">📅</button>
+            <button id="settingsBtn" class="icon-button" title="练习设置">⚙️</button>
         </div>
     </header>
 
     <main class="math-container">
         <section class="math-section">
+            <div class="mode-selector" id="modeSelector">
+                <button class="mode-btn active" data-mode="practice">
+                    <span class="mode-icon">📝</span>
+                    <span class="mode-title">自由练习</span>
+                    <span class="mode-desc">自定义练习内容</span>
+                </button>
+                <button class="mode-btn" data-mode="challenge">
+                    <span class="mode-icon">🏆</span>
+                    <span class="mode-title">每日挑战</span>
+                    <span class="mode-desc">每天10题，满分100分</span>
+                </button>
+            </div>
+
             <div id="settingsPanel" class="settings-panel" style="display: none;">
                 <h2>练习设置</h2>
-                <div class="settings-grid">
-                    <label class="setting-item">
-                        <input type="checkbox" id="allowAddition" checked>
-                        <span class="setting-label">加法</span>
-                    </label>
-                    <label class="setting-item">
-                        <input type="checkbox" id="allowSubtraction" checked>
-                        <span class="setting-label">减法</span>
-                    </label>
-                    <div class="setting-item max-number">
-                        <label for="maxNumber">最大数字：</label>
-                        <input type="number" id="maxNumber" value="100" min="1" max="100">
-                    </div>
+                <div class="game-instructions">
+                    <p>📝 练习说明：</p>
+                    <ul>
+                        <li>选择你想练习的运算类型</li>
+                        <li>设置最大数字范围（1-100）</li>
+                        <li>每组5道题目，答对加分</li>
+                        <li>连续答对可以获得额外分数！</li>
+                    </ul>
                 </div>
-                <div class="daily-challenge-info">
-                    <h3>每日挑战</h3>
-                    <p>每天一次挑战机会，10道题目，满分100分！</p>
-                    <button id="dailyChallenge" class="primary-button">开始今日挑战</button>
+                <div class="settings-grid">
+                    <div class="settings-section">
+                        <h3>运算类型</h3>
+                        <label class="setting-item">
+                            <input type="checkbox" id="allowAddition" checked>
+                            <span class="setting-label">加法</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="checkbox" id="allowSubtraction" checked>
+                            <span class="setting-label">减法</span>
+                        </label>
+                    </div>
+                    <div class="settings-section">
+                        <h3>难度设置</h3>
+                        <div class="setting-item max-number">
+                            <label for="maxNumber">最大数字：</label>
+                            <input type="number" id="maxNumber" value="100" min="1" max="100">
+                        </div>
+                    </div>
                 </div>
                 <button id="startMath" class="primary-button">开始练习</button>
             </div>
+
             <div class="math-problems">
                 <div id="problemList" class="problem-grid"></div>
                 <div class="empty-state">
                     <p>还没有题目哦～</p>
-                    <p>点击下方"新的题目"按钮开始练习吧！</p>
-                    <div class="empty-state-arrow">👇</div>
+                    <p>选择练习模式开始答题吧！</p>
                 </div>
             </div>
+
             <div id="calendarView" class="calendar-view" style="display: none;">
-                <!-- 日历视图将通过 JavaScript 动态生成 -->
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prevMonth">◀</button>
+                    <h3 class="calendar-title"></h3>
+                    <button class="calendar-nav" id="nextMonth">▶</button>
+                </div>
+                <div class="calendar-content">
+                    <!-- 日历内容将通过 JavaScript 动态生成 -->
+                </div>
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <span class="legend-color perfect"></span>
+                        <span class="legend-text">满分</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color good"></span>
+                        <span class="legend-text">优秀</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color normal"></span>
+                        <span class="legend-text">继续加油</span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
