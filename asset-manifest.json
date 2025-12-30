@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/foryou/static/css/main.a27f72ee.css",
+    "main.js": "/foryou/static/js/main.ac040ae8.js",
+    "index.html": "/foryou/index.html",
+    "main.a27f72ee.css.map": "/foryou/static/css/main.a27f72ee.css.map",
+    "main.ac040ae8.js.map": "/foryou/static/js/main.ac040ae8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a27f72ee.css",
+    "static/js/main.ac040ae8.js"
+  ]
+}
