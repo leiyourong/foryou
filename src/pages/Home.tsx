@@ -40,7 +40,8 @@ const apps = [
 ];
 
 const Home: React.FC = () => {
-  const currentTime = new Date().toLocaleTimeString('zh-CN', {
+  const now = new Date();
+  const currentTime = now.toLocaleTimeString('zh-CN', {
     hour: '2-digit',
     minute: '2-digit'
   });
@@ -49,6 +50,13 @@ const Home: React.FC = () => {
     day: 'numeric',
     weekday: 'long'
   });
+
+  const hour = now.getHours();
+  let greeting = '你好，柚子！';
+  if (hour < 11) greeting = '早上好，柚子！';
+  else if (hour < 14) greeting = '中午好，柚子！';
+  else if (hour < 18) greeting = '下午好，柚子！';
+  else greeting = '晚上好，柚子！';
 
   return (
     <div className="mobile-desktop">
@@ -65,6 +73,86 @@ const Home: React.FC = () => {
         marginBottom: '10px'
       }}>
         <AvatarPicker />
+      </div>
+
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: '16px',
+          fontSize: 16,
+          fontWeight: 600,
+          color: '#ff6b9d'
+        }}
+      >
+        {greeting}今天想玩什么呢？
+      </div>
+
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: '24px'
+        }}
+      >
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 12,
+            padding: '8px 16px',
+            borderRadius: 999,
+            background: 'rgba(255, 255, 255, 0.85)',
+            boxShadow: '0 4px 16px rgba(255, 170, 60, 0.3)'
+          }}
+        >
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at 30% 30%, #ffe9a6 0, #ffcf5a 40%, #ffb347 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 20,
+              fontWeight: 700,
+              color: '#8b4513',
+              position: 'relative'
+            }}
+          >
+            柚
+            <span
+              style={{
+                position: 'absolute',
+                top: -4,
+                right: -2,
+                width: 14,
+                height: 14,
+                borderRadius: '50%',
+                background: '#78c850'
+              }}
+            />
+          </div>
+          <div style={{ textAlign: 'left' }}>
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                color: '#ff6b9d'
+              }}
+            >
+              柚子的小小学习乐园
+            </div>
+            <div
+              style={{
+                marginTop: 4,
+                fontSize: 13,
+                color: '#666'
+              }}
+            >
+              和柚子一起玩游戏、练数学、学英语、背单词。
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* 应用图标网格 */}

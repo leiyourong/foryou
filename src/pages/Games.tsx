@@ -1,24 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  Col,
-  Divider,
-  Flex,
-  Progress,
-  Row,
-  Space,
-  Statistic,
-  Switch,
-  Tag,
-  Typography,
-  message,
-  Segmented
-} from 'antd';
+import { Alert, Badge, Button, Card, Col, Divider, Flex, Progress, Row, Space, Statistic, Switch, Tag, Typography, Segmented } from 'antd';
 import { playWord, playCongratulations, isSpeechSupported } from '../utils/speech';
 import { vocabularyData, VocabItem } from '../data/vocabularyData';
+import YuzuLogo from '../components/YuzuLogo';
 
 type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -149,6 +133,9 @@ const Games: React.FC = () => {
 
   return (
     <div className="page">
+      <div style={{ marginBottom: 16 }}>
+        <YuzuLogo subtitle="单词小游戏" />
+      </div>
       <Row gutter={[16, 16]}>
         <Col xs={24} md={8}>
           <Card
@@ -258,4 +245,3 @@ const Games: React.FC = () => {
 };
 
 export default Games;
-

@@ -1,22 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  Col,
-  Divider,
-  Flex,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Space,
-  Statistic,
-  Tag,
-  message
-} from 'antd';
+import { Alert, Badge, Button, Card, Col, Divider, Flex, Form, Input, Radio, Row, Space, Statistic, Tag, message } from 'antd';
 import { TrophyOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import YuzuLogo from '../components/YuzuLogo';
 
 type Difficulty = 'easy' | 'medium' | 'hard';
 type Operation = '+' | '-' | '×';
@@ -222,6 +207,9 @@ const MonsterMath: React.FC = () => {
   return (
     <div className="page">
       {contextHolder}
+      <div style={{ marginBottom: 16 }}>
+        <YuzuLogo subtitle="怪兽数学" />
+      </div>
       <Row gutter={[16, 16]}>
         <Col xs={24} md={10}>
           <Card title="练习设置" extra={<Badge status={game.isActive ? 'processing' : 'default'} text={game.isActive ? '进行中' : '未开始'} />}>
@@ -346,4 +334,3 @@ const MonsterMath: React.FC = () => {
 };
 
 export default MonsterMath;
-

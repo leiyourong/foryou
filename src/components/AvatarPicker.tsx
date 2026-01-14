@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Upload, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
@@ -6,7 +6,6 @@ const storageKey = 'userAvatar';
 
 const AvatarPicker: React.FC = () => {
   const [src, setSrc] = useState<string | undefined>(undefined);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -85,4 +84,3 @@ const AvatarPicker: React.FC = () => {
 };
 
 export default AvatarPicker;
-

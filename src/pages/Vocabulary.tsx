@@ -1,24 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Alert,
-  Button,
-  Card,
-  Col,
-  Divider,
-  Form,
-  InputNumber,
-  List,
-  Radio,
-  Row,
-  Space,
-  Tabs,
-  Tag,
-  Typography,
-  message
-} from 'antd';
+import { Alert, Button, Card, Col, Divider, Form, InputNumber, List, Radio, Row, Space, Tabs, Tag, message } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import { vocabularyData, VocabItem } from '../data/vocabularyData';
 import { playWord, playCongratulations, isSpeechSupported } from '../utils/speech';
+import YuzuLogo from '../components/YuzuLogo';
 
 type StudyMode = 'learn' | 'quiz';
 type QuizRange = 'current' | 'all';
@@ -39,6 +24,7 @@ const Vocabulary: React.FC = () => {
   const [count, setCount] = useState(10);
   const [quiz, setQuiz] = useState<QuizState | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [activePane, setActivePane] = useState<'settings' | 'study'>('settings');
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -118,62 +104,129 @@ const Vocabulary: React.FC = () => {
 
   return (
     <div className="page">
-      <Row gutter={[16, 16]}>
-        <Col xs={24} md={8}>
-          <Card title="学习设置">
-            <Form layout="vertical">
-              <Form.Item label="模式">
-                <Radio.Group
-                  value={mode}
-                  onChange={(e) => {
-                    setMode(e.target.value);
-                    if (e.target.value === 'quiz') startQuiz();
+      <div style={{ marginBottom: 16 }}>
+        <YuzuLogo subtitle="单词小书包" />
+      </div>
+      <Card
+        tabList={[
+          { key: 'settings', label: '设置' },
+          { key: 'study', label: '开始学习' }
+        ]}
+        activeTabKey={activePane}
+        onTabChange={(key) => {
+          const next = key as 'settings' | 'study';
+          if (next === 'study' && mode === 'quiz' && !quiz) {
+            startQuiz();
+          }
+          setActivePane(next);
+        }}
+      >
+        {activePane === 'settings' && (
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={10}>
+              <Card type="inner" title="学习设置">
+                <Form layout="vertical">
+                  <Form.Item label="模式">
+                    <Radio.Group
+                      value={mode}
+                      onChange={(e) => {
+                        setMode(e.target.value);
+                        if (e.target.value === 'quiz') startQuiz();
+                      }}
+                    >
+                      <Radio.Button value="learn">学习</Radio.Button>
+                      <Radio.Button value="quiz">测验</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item label="显示中文释义">
+                    <Radio.Group
+                      value={showTranslation ? 'yes' : 'no'}
+                      onChange={(e) => setShowTranslation(e.target.value === 'yes')}
+                    >
+                      <Radio.Button value="yes">显示</Radio.Button>
+                      <Radio.Button value="no">隐藏</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item label="测验范围">
+                    <Radio.Group
+                      value={quizRange}
+                      onChange={(e) => setQuizRange(e.target.value)}
+                      disabled={mode !== 'quiz'}
+                    >
+                      <Radio.Button value="current">当前课</Radio.Button>
+                      <Radio.Button value="all">全部</Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
+                  <Form.Item label="题目数量">
+                    <InputNumber
+                      min={5}
+                      max={30}
+                      value={count}
+                      onChange={(v) => setCount(v || 10)}
+                      disabled={mode !== 'quiz'}
+                    />
+                  </Form.Item>
+                  {mode === 'quiz' && (
+                    <Button type="primary" block onClick={startQuiz}>
+                      重新生成题目
+                    </Button>
+                  )}
+                </Form>
+              </Card>
+            </Col>
+            <Col xs={24} md={14}>
+              <Card
+                type="inner"
+                title="课程选择预览"
+                extra={
+                  <Space>
+                    <Tag color="blue">{lessons.length} 个单元</Tag>
+                    {!isSpeechSupported && <Tag color="red">浏览器不支持语音</Tag>}
+                  </Space>
+                }
+              >
+                <Tabs
+                  activeKey={lesson}
+                  onChange={(k) => {
+                    setLesson(k);
+                    if (mode === 'quiz') startQuiz();
                   }}
-                >
-                  <Radio.Button value="learn">学习</Radio.Button>
-                  <Radio.Button value="quiz">测验</Radio.Button>
-                </Radio.Group>
-              </Form.Item>
-              <Form.Item label="显示中文释义">
-                <Radio.Group
-                  value={showTranslation ? 'yes' : 'no'}
-                  onChange={(e) => setShowTranslation(e.target.value === 'yes')}
-                >
-                  <Radio.Button value="yes">显示</Radio.Button>
-                  <Radio.Button value="no">隐藏</Radio.Button>
-                </Radio.Group>
-              </Form.Item>
-              <Form.Item label="测验范围">
-                <Radio.Group
-                  value={quizRange}
-                  onChange={(e) => setQuizRange(e.target.value)}
-                  disabled={mode !== 'quiz'}
-                >
-                  <Radio.Button value="current">当前课</Radio.Button>
-                  <Radio.Button value="all">全部</Radio.Button>
-                </Radio.Group>
-              </Form.Item>
-              <Form.Item label="题目数量">
-                <InputNumber
-                  min={5}
-                  max={30}
-                  value={count}
-                  onChange={(v) => setCount(v || 10)}
-                  disabled={mode !== 'quiz'}
+                  items={lessons.map((k) => ({
+                    key: k,
+                    label: k.replace('lesson', '第 ') + ' 课'
+                  }))}
                 />
-              </Form.Item>
-              {mode === 'quiz' && (
-                <Button type="primary" block onClick={startQuiz}>
-                  重新生成题目
-                </Button>
-              )}
-            </Form>
-          </Card>
-        </Col>
+                <Alert
+                  type="info"
+                  message="这里只展示前几个单词作为预览，真正学习请切换到“开始学习”页签。"
+                  showIcon
+                  style={{ marginBottom: 12 }}
+                />
+                <List
+                  dataSource={currentWords.slice(0, 4)}
+                  renderItem={(w) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        title={
+                          <Space>
+                            <strong>{w.english}</strong>
+                            <Tag color="geekblue">{w.phonetic}</Tag>
+                          </Space>
+                        }
+                        description={showTranslation ? <span>{w.chinese}</span> : <span style={{ color: '#ccc' }}>隐藏</span>}
+                      />
+                    </List.Item>
+                  )}
+                />
+              </Card>
+            </Col>
+          </Row>
+        )}
 
-        <Col xs={24} md={16}>
+        {activePane === 'study' && (
           <Card
-            title="课程选择"
+            type="inner"
+            title={mode === 'learn' ? '单词学习' : '单词测验'}
             extra={
               <Space>
                 <Tag color="blue">{lessons.length} 个单元</Tag>
@@ -228,7 +281,13 @@ const Vocabulary: React.FC = () => {
 
             {mode === 'quiz' && (
               <div>
-                {!quiz && <Alert type="info" message="点击左侧生成题目开始测验" showIcon />}
+                {!quiz && (
+                  <Alert
+                    type="info"
+                    message="已经根据当前设置为你准备好了题目，切换页签就可以开始答题。"
+                    showIcon
+                  />
+                )}
                 {quiz && !quizDone && currentQuestion && (
                   <Card type="inner" title={`第 ${quiz.idx + 1} / ${quiz.words.length} 题`}>
                     <div style={{ fontSize: 24, marginBottom: 12 }}>
@@ -277,11 +336,10 @@ const Vocabulary: React.FC = () => {
               </div>
             )}
           </Card>
-        </Col>
-      </Row>
+        )}
+      </Card>
     </div>
   );
 };
 
 export default Vocabulary;
-
