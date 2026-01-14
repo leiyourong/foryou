@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Button, Card, Col, Divider, Form, InputNumber, List, Radio, Row, Space, Tabs, Tag, message } from 'antd';
+import { Alert, Button, Card, Col, Divider, Dropdown, Form, InputNumber, List, Radio, Row, Space, Tabs, Tag, message } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import { vocabularyData, VocabItem } from '../data/vocabularyData';
 import { playWord, playCongratulations, isSpeechSupported } from '../utils/speech';
@@ -102,10 +102,41 @@ const Vocabulary: React.FC = () => {
 
   const quizDone = quiz && quiz.idx >= quiz.words.length;
 
+  const settingsMenu = {
+    items: [
+      {
+        key: 'learn',
+        label: '单词学习模式',
+        onClick: () => setMode('learn')
+      },
+      {
+        key: 'quiz-current',
+        label: '当前课测验',
+        onClick: () => {
+          setMode('quiz');
+          setQuizRange('current');
+          startQuiz();
+        }
+      },
+      {
+        key: 'quiz-all',
+        label: '全部单元测验',
+        onClick: () => {
+          setMode('quiz');
+          setQuizRange('all');
+          startQuiz();
+        }
+      }
+    ]
+  };
+
   return (
     <div className="page">
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <YuzuLogo subtitle="单词小书包" />
+        <Dropdown menu={settingsMenu} trigger={['click']}>
+          <Button size="small" shape="circle" icon={<span>⋯</span>} />
+        </Dropdown>
       </div>
       <Card
         tabList={[

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Badge, Button, Card, Col, Divider, Flex, Form, Input, Radio, Row, Space, Statistic, Tag, message } from 'antd';
-import { TrophyOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Badge, Button, Card, Col, Divider, Flex, Form, Input, Radio, Row, Space, Statistic, Tag, message, Dropdown } from 'antd';
+import { MoreOutlined, TrophyOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import YuzuLogo from '../components/YuzuLogo';
 
 type Difficulty = 'easy' | 'medium' | 'hard';
@@ -204,11 +204,52 @@ const MonsterMath: React.FC = () => {
     />
   ) : null;
 
+  const settingsMenu = {
+    items: [
+      {
+        key: 'easy',
+        label: '简单加减',
+        onClick: () =>
+          setSettings({
+            allowAddition: true,
+            allowSubtraction: true,
+            allowMultiplication: false,
+            difficulty: 'easy'
+          })
+      },
+      {
+        key: 'mixed',
+        label: '加减乘混合',
+        onClick: () =>
+          setSettings({
+            allowAddition: true,
+            allowSubtraction: true,
+            allowMultiplication: true,
+            difficulty: 'medium'
+          })
+      },
+      {
+        key: 'hard',
+        label: '困难挑战',
+        onClick: () =>
+          setSettings({
+            allowAddition: true,
+            allowSubtraction: true,
+            allowMultiplication: true,
+            difficulty: 'hard'
+          })
+      }
+    ]
+  };
+
   return (
     <div className="page">
       {contextHolder}
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <YuzuLogo subtitle="怪兽数学" />
+        <Dropdown menu={settingsMenu} trigger={['click']}>
+          <Button size="small" shape="circle" icon={<MoreOutlined />} />
+        </Dropdown>
       </div>
       <Row gutter={[16, 16]}>
         <Col xs={24} md={10}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Badge, Button, Card, Col, Divider, Flex, Progress, Row, Space, Statistic, Switch, Tag, Typography, Segmented } from 'antd';
+import { Alert, Badge, Button, Card, Col, Divider, Dropdown, Flex, Progress, Row, Space, Statistic, Switch, Tag, Typography, Segmented } from 'antd';
 import { playWord, playCongratulations, isSpeechSupported } from '../utils/speech';
 import { vocabularyData, VocabItem } from '../data/vocabularyData';
 import YuzuLogo from '../components/YuzuLogo';
@@ -131,10 +131,35 @@ const Games: React.FC = () => {
 
   const progress = Math.round((matched / totalPairs) * 100);
 
+  const settingsMenu = {
+    items: [
+      {
+        key: 'easy',
+        label: '简单 3x4',
+        onClick: () => setDifficulty('easy')
+      },
+      {
+        key: 'medium',
+        label: '中等 4x4',
+        onClick: () => setDifficulty('medium')
+      },
+      {
+        key: 'hard',
+        label: '困难 4x5',
+        onClick: () => setDifficulty('hard')
+      }
+    ]
+  };
+
   return (
     <div className="page">
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <YuzuLogo subtitle="单词小游戏" />
+        <Dropdown menu={settingsMenu} trigger={['click']}>
+          <Button size="small" shape="circle">
+            ⋯
+          </Button>
+        </Dropdown>
       </div>
       <Row gutter={[16, 16]}>
         <Col xs={24} md={8}>

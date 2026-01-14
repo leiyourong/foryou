@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Button, Card, Col, Form, Radio, Row, Space, Tag, message } from 'antd';
-import { SoundOutlined, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+import { Alert, Button, Card, Col, Dropdown, Form, Radio, Row, Space, Tag, message } from 'antd';
+import { MoreOutlined, SoundOutlined, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { playWord, playCongratulations, isSpeechSupported } from '../utils/speech';
 import YuzuLogo from '../components/YuzuLogo';
 
@@ -146,10 +146,33 @@ const English: React.FC = () => {
     });
   };
 
+  const settingsMenu = {
+    items: [
+      {
+        key: 'both',
+        label: '大小写混合',
+        onClick: () => setSettings({ includeLowerCase: true, includeUpperCase: true })
+      },
+      {
+        key: 'upper',
+        label: '仅大写',
+        onClick: () => setSettings({ includeLowerCase: false, includeUpperCase: true })
+      },
+      {
+        key: 'lower',
+        label: '仅小写',
+        onClick: () => setSettings({ includeLowerCase: true, includeUpperCase: false })
+      }
+    ]
+  };
+
   return (
     <div className="page">
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <YuzuLogo subtitle="趣味英语" />
+        <Dropdown menu={settingsMenu} trigger={['click']}>
+          <Button size="small" shape="circle" icon={<MoreOutlined />} />
+        </Dropdown>
       </div>
       <Card
         tabList={[

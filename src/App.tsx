@@ -1,13 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import {
-  CalculatorOutlined,
-  HomeOutlined,
-  ReadOutlined,
-  RocketOutlined,
-  SmileOutlined
-} from '@ant-design/icons';
-import Home from './pages/Home';
+import { CalculatorOutlined, HomeOutlined, ReadOutlined, RocketOutlined, SmileOutlined } from '@ant-design/icons';
+import Welcome from './pages/Welcome';
 import MonsterMath from './pages/MonsterMath';
 import Vocabulary from './pages/Vocabulary';
 import English from './pages/English';
@@ -18,7 +12,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { key: 'home', icon: <HomeOutlined />, label: '主页', path: '/' },
+    { key: 'home', icon: <HomeOutlined />, label: '首页', path: '/' },
     { key: 'monster-math', icon: <CalculatorOutlined />, label: '数学', path: '/monster-math' },
     { key: 'vocabulary', icon: <ReadOutlined />, label: '单词', path: '/vocabulary' },
     { key: 'english', icon: <SmileOutlined />, label: '英语', path: '/english' },
@@ -35,7 +29,7 @@ const App: React.FC = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Welcome />} />
         <Route path="/monster-math" element={<MonsterMath />} />
         <Route path="/vocabulary" element={<Vocabulary />} />
         <Route path="/english" element={<English />} />
